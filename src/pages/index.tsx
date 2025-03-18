@@ -2,9 +2,23 @@ import CategoryCard from "@/components/elements/CategoryCard";
 import ProductCard from "@/components/elements/ProductCard";
 import { ChevronDown, ShoppingCart, User } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-function index() {
+// Types
+import { Product } from "@/types/products";
+import axios from "axios";
+
+function HomePage() {
+  const [products, setProducts] = useState<Product[]>([]);
+  useEffect(() => {
+    axios
+      .get("/api/products")
+      .then((res) => setProducts(res.data))
+      .catch((err) => console.log(err));
+  }, []);
+
+  console.log(products);
+
   return (
     <main>
       <nav className="flex items-center justify-between py-5 lg:py-8">
@@ -159,18 +173,19 @@ function index() {
         </header>
 
         <article className="mt-10 grid grid-cols-2 gap-3 gap-y-10 lg:grid-cols-4">
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          {products.map((product) => (
+            <ProductCard
+              key={product.id}
+              image={product.image}
+              name={product.name}
+              subname={product.subname}
+              price={product.price}
+            />
+          ))}
         </article>
       </section>
     </main>
   );
 }
 
-export default index;
+export default HomePage;
