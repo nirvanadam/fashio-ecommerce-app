@@ -1,114 +1,176 @@
-import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
+import CategoryCard from "@/components/elements/CategoryCard";
+import ProductCard from "@/components/elements/ProductCard";
+import { ChevronDown, ShoppingCart, User } from "lucide-react";
+import Link from "next/link";
+import React from "react";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export default function Home() {
+function index() {
   return (
-    <div
-      className={`${geistSans.variable} ${geistMono.variable} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
-    >
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/pages/index.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <main>
+      <nav className="flex items-center justify-between py-5 lg:py-8">
+        <Link href="/" className="text-2xl font-medium tracking-widest">
+          FASHIO
+        </Link>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+        <div className="hidden items-center gap-10 lg:flex">
+          <Link href="#" className="text-sm font-medium uppercase">
+            Product
+          </Link>
+
+          <button className="group relative flex items-center gap-1">
+            <h1 className="text-sm uppercase">Category</h1>
+            <ChevronDown size={18} color="#000000" />
+            <div className="absolute top-7 left-0 z-100 hidden w-fit flex-col bg-white px-7 py-4 shadow-xl transition group-hover:flex">
+              <Link href="#" className="font-medium text-gray-400">
+                Tops
+              </Link>
+              <Link href="#" className="font-medium text-gray-400">
+                Pants
+              </Link>
+              <Link href="#" className="font-medium text-gray-400">
+                Shoes
+              </Link>
+              <Link href="#" className="font-medium text-gray-400">
+                Jacket
+              </Link>
+              <Link href="#" className="font-medium text-gray-400">
+                Hoodie
+              </Link>
+            </div>
+          </button>
+
+          <Link href="#" className="text-sm font-medium uppercase">
+            <ShoppingCart color="#000000" />
+          </Link>
+
+          <Link href="#" className="flex items-center gap-2 uppercase">
+            <User color="#000000" />
+            <h1 className="text-sm font-medium">Hi, Adam!</h1>
+          </Link>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </nav>
+
+      {/* Hero Section */}
+
+      <section className="before relative -mx-5 flex h-[600px] items-center bg-[url(/images/hero.jpg)] bg-cover bg-[center] text-white lg:-mx-16 lg:h-[85vh] xl:-mx-24 2xl:-mx-64">
+        <span className="absolute h-full w-full bg-black opacity-70" />
+
+        <div className="absolute w-full px-5 lg:w-[60%] lg:px-10 xl:w-[65%] xl:px-20 2xl:px-60">
+          <h1 className="relative text-4xl leading-[1.3] uppercase sm:text-5xl lg:text-6xl">
+            <span className="absolute -top-5 h-[2px] w-1/4 bg-white" />
+            Save up to 50% in our winter sale
+          </h1>
+          <p className="mt-3 xl:text-lg">
+            Lorem ipsum dolor sit amet consectetur adipiscing eli mattis sit
+            phasellus mollis sit aliquam sit nullam neque ultrices.
+          </p>
+
+          <div className="mt-10 flex flex-col gap-5 uppercase sm:flex-row md:w-[600px] lg:w-full">
+            <Link
+              href="/"
+              className="flex w-full items-center justify-center bg-white px-7 py-5 text-center text-lg font-medium text-black xl:py-7"
+            >
+              Explore Products
+            </Link>
+            <Link
+              href="/"
+              className="flex w-full items-center justify-center border border-white px-7 py-5 text-lg font-medium xl:py-7"
+            >
+              Categories
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Category Menu Section */}
+      <section className="mt-24 sm:mt-32 md:mt-32">
+        <header className="items-center justify-between lg:flex">
+          <h1 className="relative text-2xl font-medium uppercase lg:text-3xl">
+            <span className="absolute -top-4 h-[2px] w-[20%] bg-black sm:w-[15%]" />
+            Explore by Category
+          </h1>
+
+          <button className="mt-5 flex w-full items-center justify-center border border-black px-7 py-4 text-lg font-medium uppercase sm:mt-8 sm:w-fit md:py-5 lg:mt-0">
+            All Products
+          </button>
+        </header>
+
+        <article className="mt-10 gap-5 sm:mt-14">
+          <main className="grid grid-cols-2 gap-5">
+            <CategoryCard
+              title="Tops"
+              image="/images/tshirt_category.jpg"
+              style="lg:aspect-video"
+            />
+            <CategoryCard
+              title="Pants"
+              image="/images/pants_category.jpg"
+              style="lg:aspect-video"
+            />
+          </main>
+
+          <main className="mt-5 grid grid-cols-2 gap-5 lg:grid-cols-3">
+            <CategoryCard
+              title="Shoes"
+              image="/images/shoes_category.jpg"
+              style="col-span-2 aspect-video lg:col-span-1 lg:aspect-square lg:bg-[-50px]"
+            />
+            <CategoryCard
+              title="Jackets"
+              image="/images/jacket_category.jpg"
+              style=""
+            />
+            <CategoryCard
+              title="Hoodies"
+              image="/images/hoodie_category.jpg"
+              style=""
+            />
+          </main>
+        </article>
+      </section>
+
+      {/* Hero2 Section */}
+      <section className="-mx-5 mt-16 grid grid-cols-1 sm:mt-24 md:mt-32 lg:-mx-16 lg:grid-cols-2 xl:-mx-24 xl:h-[600px] 2xl:-mx-64 2xl:mt-48 2xl:h-[800px]">
+        <div className="flex flex-col justify-center bg-black px-6 py-24 sm:items-center lg:items-start lg:px-8 xl:px-24 2xl:px-48">
+          <h1 className="relative text-2xl leading-normal font-medium text-white uppercase sm:text-center sm:text-3xl lg:text-left xl:text-4xl 2xl:w-3/4">
+            <span className="absolute -top-4 h-[2px] w-[100px] bg-white lg:-top-6" />
+            Get 10% Off on Your First Order
+          </h1>
+
+          <button className="mt-10 flex w-full items-center justify-center bg-white px-7 py-4 text-lg font-medium uppercase sm:w-fit md:py-5">
+            Explore Products
+          </button>
+        </div>
+
+        <div className="h-[450px] w-full bg-[url(/images/hero2.jpg)] bg-cover xl:h-full xl:bg-[center_-100px]" />
+      </section>
+
+      {/* Latest Products Section */}
+      <section className="mt-24 sm:mt-32 md:mt-32">
+        <header className="items-center justify-between lg:flex">
+          <h1 className="relative text-2xl font-medium uppercase lg:text-3xl">
+            <span className="absolute -top-4 h-[2px] w-[20%] bg-black sm:w-[15%]" />
+            Latest Product
+          </h1>
+
+          <button className="mt-5 flex w-full items-center justify-center border border-black px-7 py-4 text-lg font-medium uppercase sm:mt-8 sm:w-fit md:py-5 lg:mt-0">
+            All Products
+          </button>
+        </header>
+
+        <article className="mt-10 grid grid-cols-2 gap-3 gap-y-10 lg:grid-cols-4">
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+        </article>
+      </section>
+    </main>
   );
 }
+
+export default index;
