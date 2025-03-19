@@ -19,7 +19,7 @@ function HomePage() {
   return (
     <main>
       {/* Hero Section */}
-      <section className="before relative -mx-5 flex h-[600px] items-center bg-[url(/images/hero.jpg)] bg-cover bg-[center] text-white lg:-mx-16 lg:h-[85vh] xl:-mx-24 2xl:-mx-64">
+      <section className="before relative -mx-5 flex h-[600px] items-center bg-[url(/images/assets/hero.jpg)] bg-cover bg-[center] text-white lg:-mx-16 lg:h-[85vh] xl:-mx-24 2xl:-mx-64">
         <span className="absolute h-full w-full bg-black opacity-70" />
 
         <div className="absolute w-full px-5 lg:w-[60%] lg:px-10 xl:w-[65%] xl:px-20 2xl:px-60">
@@ -34,32 +34,36 @@ function HomePage() {
 
           <div className="mt-10 flex flex-col gap-5 uppercase sm:flex-row md:w-[600px] lg:w-full">
             <Link
-              href="/"
-              className="flex w-full items-center justify-center bg-white px-7 py-5 text-center text-lg font-medium text-black xl:py-7"
+              href="/category/all"
+              className="flex w-full items-center justify-center bg-white px-7 py-5 text-center text-lg font-medium text-black transition duration-300 hover:-translate-y-1 xl:py-7"
             >
               Explore Products
             </Link>
-            <Link
-              href="/"
-              className="flex w-full items-center justify-center border border-white px-7 py-5 text-lg font-medium xl:py-7"
+
+            <a
+              href="#category"
+              className="flex w-full items-center justify-center border border-white px-7 py-5 text-lg font-medium transition duration-300 hover:-translate-y-1 hover:bg-white hover:text-black xl:py-7"
             >
               Categories
-            </Link>
+            </a>
           </div>
         </div>
       </section>
 
       {/* Category Menu Section */}
-      <section className="mt-24 sm:mt-32 md:mt-32">
+      <section id="category" className="mt-24 sm:mt-32 md:mt-32">
         <header className="items-center justify-between lg:flex">
           <h1 className="relative text-2xl font-medium uppercase lg:text-3xl">
             <span className="absolute -top-4 h-[2px] w-[20%] bg-black sm:w-[15%]" />
             Explore by Category
           </h1>
 
-          <button className="mt-5 flex w-full items-center justify-center border border-black px-7 py-4 text-lg font-medium uppercase sm:mt-8 sm:w-fit md:py-5 lg:mt-0">
+          <Link
+            href="/category/all"
+            className="mt-5 flex w-full items-center justify-center border border-black px-7 py-4 text-lg font-medium uppercase transition duration-300 hover:-translate-y-1 hover:bg-black hover:text-white sm:mt-8 sm:w-fit md:py-5 lg:mt-0"
+          >
             All Products
-          </button>
+          </Link>
         </header>
 
         <article className="mt-10 gap-5 sm:mt-14">
@@ -67,13 +71,13 @@ function HomePage() {
             <CategoryCard
               category="tops"
               title="Tops"
-              image="/images/tshirt_category.jpg"
+              image="/images/assets/tshirt_category.jpg"
               style="lg:aspect-video"
             />
             <CategoryCard
               category="pants"
               title="Pants"
-              image="/images/pants_category.jpg"
+              image="/images/assets/pants_category.jpg"
               style="lg:aspect-video"
             />
           </main>
@@ -82,19 +86,19 @@ function HomePage() {
             <CategoryCard
               category="shoes"
               title="Shoes"
-              image="/images/shoes_category.jpg"
+              image="/images/assets/shoes_category.jpg"
               style="col-span-2 aspect-video lg:col-span-1 lg:aspect-square lg:bg-[-50px]"
             />
             <CategoryCard
               category="jackets"
               title="Jackets"
-              image="/images/jacket_category.jpg"
+              image="/images/assets/jacket_category.jpg"
               style=""
             />
             <CategoryCard
               category="hoodies"
               title="Hoodies"
-              image="/images/hoodie_category.jpg"
+              image="/images/assets/hoodie_category.jpg"
               style=""
             />
           </main>
@@ -109,12 +113,15 @@ function HomePage() {
             Get 10% Off on Your First Order
           </h1>
 
-          <button className="mt-10 flex w-full items-center justify-center bg-white px-7 py-4 text-lg font-medium uppercase sm:w-fit md:py-5">
+          <Link
+            href="/category/all"
+            className="mt-10 flex w-full items-center justify-center bg-white px-7 py-4 text-lg font-medium uppercase sm:w-fit md:py-5"
+          >
             Explore Products
-          </button>
+          </Link>
         </div>
 
-        <div className="h-[450px] w-full bg-[url(/images/hero2.jpg)] bg-cover xl:h-full xl:bg-[center_-100px]" />
+        <div className="h-[450px] w-full bg-[url(/images/assets/hero2.jpg)] bg-cover xl:h-full xl:bg-[center_-100px]" />
       </section>
 
       {/* Latest Products Section */}
@@ -125,9 +132,12 @@ function HomePage() {
             Latest Product
           </h1>
 
-          <button className="mt-5 flex w-full items-center justify-center border border-black px-7 py-4 text-lg font-medium uppercase sm:mt-8 sm:w-fit md:py-5 lg:mt-0">
+          <Link
+            href="/category/all"
+            className="mt-5 flex w-full items-center justify-center border border-black px-7 py-4 text-lg font-medium uppercase transition duration-300 hover:-translate-y-1 hover:bg-black hover:text-white sm:mt-8 sm:w-fit md:py-5 lg:mt-0"
+          >
             All Products
-          </button>
+          </Link>
         </header>
 
         <article className="mt-10 grid grid-cols-2 gap-3 gap-y-10 lg:grid-cols-4">
