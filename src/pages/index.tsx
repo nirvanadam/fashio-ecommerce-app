@@ -141,7 +141,7 @@ function HomePage() {
         </header>
 
         <article className="mt-10 grid grid-cols-2 gap-3 gap-y-10 lg:grid-cols-4">
-          {products.map((product) => (
+          {products.slice(products.length - 8).map((product) => (
             <ProductCard
               key={product.id}
               image={product.image}

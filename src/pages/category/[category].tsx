@@ -1,6 +1,7 @@
 import ProductCard from "@/components/elements/ProductCard";
 import { Product } from "@/types/products";
 import axios from "axios";
+import { StepBack, StepForward } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -25,7 +26,7 @@ function AllProduct() {
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 12;
+  const itemsPerPage = 16;
 
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
 
@@ -39,12 +40,12 @@ function AllProduct() {
     setCurrentPage(1);
   }, [filteredProducts]);
 
-  useEffect(() => {
-    const productSection = document.getElementById("top");
-    if (productSection) {
-      productSection.scrollIntoView({ behavior: "auto" });
-    }
-  }, [currentPage]);
+  // useEffect(() => {
+  //   const productSection = document.getElementById("top");
+  //   if (productSection) {
+  //     productSection.scrollIntoView({ behavior: "auto" });
+  //   }
+  // }, [startIndex]);
 
   return (
     <div>
@@ -62,33 +63,69 @@ function AllProduct() {
         </p>
       </header>
 
-      <main className="mt-20 grid-cols-[0.8fr_3fr] lg:mt-28 lg:grid lg:gap-10">
-        <section className="grid grid-cols-2 gap-3 gap-y-10 lg:order-2 lg:grid-cols-3 xl:grid-cols-4">
-          {displayProducts.length > 0 ? (
-            displayProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                image={product.image}
-                name={product.name}
-                subname={product.subname}
-                price={product.price}
-              />
-            ))
-          ) : (
-            <div className="animate-pulse">
-              <div className="flex items-center justify-center overflow-hidden bg-gray-100">
-                <div className="h-[300px] w-full bg-gray-200" />
+      <main className="mt-20 lg:mt-28 lg:grid lg:grid-cols-[0.8fr_3fr] lg:gap-10">
+        <section className="lg:order-2">
+          <article className="grid grid-cols-2 gap-3 gap-y-10 lg:grid-cols-3 xl:grid-cols-4">
+            {displayProducts.length > 0 ? (
+              displayProducts.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  image={product.image}
+                  name={product.name}
+                  subname={product.subname}
+                  price={product.price}
+                />
+              ))
+            ) : (
+              <div className="animate-pulse">
+                <div className="flex items-center justify-center overflow-hidden bg-gray-100">
+                  <div className="h-[300px] w-full bg-gray-200" />
+                </div>
+
+                <h1 className="mt-5 h-[15px] w-full bg-gray-200"></h1>
+                <p className="mt-1 h-[15px] w-full bg-gray-200"></p>
+
+                <h1 className="mt-2 h-[15px] w-1/2 bg-gray-200"></h1>
               </div>
+            )}
+          </article>
 
-              <h1 className="mt-5 h-[15px] w-full bg-gray-200"></h1>
-              <p className="mt-1 h-[15px] w-full bg-gray-200"></p>
+          <nav className="mt-16 flex justify-center gap-5">
+            <button
+              type="button"
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage((prev) => prev - 1)}
+              className="cursor-pointer"
+            >
+              <StepBack size={24} strokeWidth={1.5} />
+            </button>
 
-              <h1 className="mt-2 h-[15px] w-1/2 bg-gray-200"></h1>
-            </div>
-          )}
+            {[...Array(totalPages)].map((page, index) => {
+              const pageNumber = index + 1;
+              return (
+                <button
+                  key={pageNumber}
+                  type="button"
+                  onClick={() => setCurrentPage(pageNumber)}
+                  className={`${currentPage === pageNumber && "border-black bg-black text-white"} h-[40px] w-[40px] cursor-pointer border border-gray-300 font-medium text-black`}
+                >
+                  {pageNumber}
+                </button>
+              );
+            })}
+
+            <button
+              type="button"
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage((prev) => prev + 1)}
+              className="cursor-pointer"
+            >
+              <StepForward size={24} strokeWidth={1.5} />
+            </button>
+          </nav>
         </section>
 
-        <aside className="mt-16 lg:order-1 lg:mt-0">
+        <aside className="mt-16 hidden lg:order-1 lg:mt-0 lg:block">
           <h1 className="border-b border-gray-300 pb-4 text-lg uppercase">
             Sort by Category
           </h1>
@@ -133,27 +170,6 @@ function AllProduct() {
           </nav>
         </aside>
       </main>
-
-      {/* Navigasi Pagination */}
-      <div className="mt-4 flex justify-center space-x-4">
-        <button
-          className="cursor-pointer rounded-md bg-gray-300 px-4 py-2"
-          disabled={currentPage === 1}
-          onClick={() => setCurrentPage((prev) => prev - 1)}
-        >
-          Prev
-        </button>
-        <span className="text-lg font-bold">
-          {currentPage} / {totalPages}
-        </span>
-        <button
-          className="cursor-pointer rounded-md bg-gray-300 px-4 py-2"
-          disabled={currentPage === totalPages}
-          onClick={() => setCurrentPage((prev) => prev + 1)}
-        >
-          Next
-        </button>
-      </div>
     </div>
   );
 }
