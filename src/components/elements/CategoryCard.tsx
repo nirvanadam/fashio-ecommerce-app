@@ -5,12 +5,13 @@ type CategoryCardProps = {
   title: string;
   image: string;
   style: string;
+  category: string;
 };
 
-function CategoryCard({ title, style, image }: CategoryCardProps) {
+function CategoryCard({ title, style, image, category }: CategoryCardProps) {
   return (
     <Link
-      href={"#"}
+      href={`/category/${category}`}
       style={{ backgroundImage: `url(${image})` }}
       className={`${style} relative flex aspect-square w-full flex-col items-center justify-center gap-5 bg-gray-100 bg-cover px-5 py-7 before:absolute before:top-0 before:left-0 before:h-full before:w-full before:bg-black before:opacity-50 sm:px-8 sm:py-10`}
     >

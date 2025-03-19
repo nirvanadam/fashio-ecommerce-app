@@ -1,6 +1,5 @@
 import CategoryCard from "@/components/elements/CategoryCard";
 import ProductCard from "@/components/elements/ProductCard";
-import { ChevronDown, ShoppingCart, User } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
@@ -17,55 +16,9 @@ function HomePage() {
       .catch((err) => console.log(err));
   }, []);
 
-  console.log(products);
-
   return (
     <main>
-      <nav className="flex items-center justify-between py-5 lg:py-8">
-        <Link href="/" className="text-2xl font-medium tracking-widest">
-          FASHIO
-        </Link>
-
-        <div className="hidden items-center gap-10 lg:flex">
-          <Link href="#" className="text-sm font-medium uppercase">
-            Product
-          </Link>
-
-          <button className="group relative flex items-center gap-1">
-            <h1 className="text-sm uppercase">Category</h1>
-            <ChevronDown size={18} color="#000000" />
-            <div className="absolute top-7 left-0 z-100 hidden w-fit flex-col bg-white px-7 py-4 shadow-xl transition group-hover:flex">
-              <Link href="#" className="font-medium text-gray-400">
-                Tops
-              </Link>
-              <Link href="#" className="font-medium text-gray-400">
-                Pants
-              </Link>
-              <Link href="#" className="font-medium text-gray-400">
-                Shoes
-              </Link>
-              <Link href="#" className="font-medium text-gray-400">
-                Jacket
-              </Link>
-              <Link href="#" className="font-medium text-gray-400">
-                Hoodie
-              </Link>
-            </div>
-          </button>
-
-          <Link href="#" className="text-sm font-medium uppercase">
-            <ShoppingCart color="#000000" />
-          </Link>
-
-          <Link href="#" className="flex items-center gap-2 uppercase">
-            <User color="#000000" />
-            <h1 className="text-sm font-medium">Hi, Adam!</h1>
-          </Link>
-        </div>
-      </nav>
-
       {/* Hero Section */}
-
       <section className="before relative -mx-5 flex h-[600px] items-center bg-[url(/images/hero.jpg)] bg-cover bg-[center] text-white lg:-mx-16 lg:h-[85vh] xl:-mx-24 2xl:-mx-64">
         <span className="absolute h-full w-full bg-black opacity-70" />
 
@@ -112,11 +65,13 @@ function HomePage() {
         <article className="mt-10 gap-5 sm:mt-14">
           <main className="grid grid-cols-2 gap-5">
             <CategoryCard
+              category="tops"
               title="Tops"
               image="/images/tshirt_category.jpg"
               style="lg:aspect-video"
             />
             <CategoryCard
+              category="pants"
               title="Pants"
               image="/images/pants_category.jpg"
               style="lg:aspect-video"
@@ -125,16 +80,19 @@ function HomePage() {
 
           <main className="mt-5 grid grid-cols-2 gap-5 lg:grid-cols-3">
             <CategoryCard
+              category="shoes"
               title="Shoes"
               image="/images/shoes_category.jpg"
               style="col-span-2 aspect-video lg:col-span-1 lg:aspect-square lg:bg-[-50px]"
             />
             <CategoryCard
+              category="jackets"
               title="Jackets"
               image="/images/jacket_category.jpg"
               style=""
             />
             <CategoryCard
+              category="hoodies"
               title="Hoodies"
               image="/images/hoodie_category.jpg"
               style=""
