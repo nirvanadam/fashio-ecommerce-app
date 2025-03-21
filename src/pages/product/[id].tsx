@@ -33,7 +33,7 @@ function DetailProducts({ product }: ProductPageProps) {
         </Link>
         <span className="font-bold text-gray-300">/</span>
         <h1 className="text-text-secondary truncate text-sm font-bold tracking-widest">
-          Nike Shoe
+          {product?.name}
         </h1>
       </header>
 
