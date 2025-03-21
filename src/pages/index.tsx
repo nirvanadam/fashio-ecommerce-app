@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 // Types
 import { Product } from "@/types/typeProducts";
 import axios from "axios";
+import Image from "next/image";
 
 function HomePage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -19,10 +20,19 @@ function HomePage() {
   return (
     <main>
       {/* Hero Section */}
-      <section className="before relative -mx-5 flex h-[600px] items-center bg-[url(/images/assets/hero.webp)] bg-cover bg-[center] text-white lg:-mx-16 lg:h-[85vh] xl:-mx-24 2xl:-mx-64">
-        <span className="absolute h-full w-full bg-black opacity-70" />
+      <section className="before relative -mx-5 flex h-[600px] items-center text-white lg:-mx-16 lg:h-[85vh] xl:-mx-24 2xl:-mx-64">
+        <span className="absolute z-10 h-full w-full bg-black opacity-70" />
 
-        <div className="absolute w-full px-5 lg:w-[60%] lg:px-10 xl:w-[65%] xl:px-20 2xl:px-60">
+        <Image
+          src="/images/assets/hero.webp"
+          objectFit="cover"
+          alt=""
+          fill
+          className=""
+          priority
+        />
+
+        <div className="absolute z-20 w-full px-5 lg:w-[60%] lg:px-10 xl:w-[65%] xl:px-20 2xl:px-60">
           <h1 className="relative text-4xl leading-[1.3] uppercase sm:text-5xl lg:text-6xl">
             <span className="absolute -top-5 h-[2px] w-1/4 bg-white" />
             Save up to 50% in our winter sale
@@ -121,7 +131,16 @@ function HomePage() {
           </Link>
         </div>
 
-        <div className="h-[450px] w-full bg-[url(/images/assets/hero2.webp)] bg-cover xl:h-full xl:bg-[center_-100px]" />
+        <div className="relative h-[450px] w-full xl:h-full xl:bg-[center_-100px]">
+          <Image
+            src="/images/assets/hero2.webp"
+            alt=""
+            objectFit="cover"
+            fill
+            objectPosition="center"
+            className=""
+          />
+        </div>
       </section>
 
       {/* Latest Products Section */}
