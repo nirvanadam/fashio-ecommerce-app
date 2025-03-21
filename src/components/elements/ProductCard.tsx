@@ -3,15 +3,16 @@ import Link from "next/link";
 import React from "react";
 
 type ProductCardProps = {
+  id: number;
   name: string;
   subname: string;
   price: number;
   image: string;
 };
 
-function ProductCard({ name, subname, price, image }: ProductCardProps) {
+function ProductCard({ id, name, subname, price, image }: ProductCardProps) {
   return (
-    <Link href="#" className="group">
+    <Link href={`/product/${id}`} className="group">
       <div className="flex items-center justify-center overflow-hidden bg-gray-100">
         <Image
           width={500}

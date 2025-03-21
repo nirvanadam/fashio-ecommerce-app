@@ -4,7 +4,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 // Types
-import { Product } from "@/types/products";
+import { Product } from "@/types/typeProducts";
 import axios from "axios";
 
 function HomePage() {
@@ -72,13 +72,13 @@ function HomePage() {
               category="tops"
               title="Tops"
               image="/images/assets/tshirt_category.jpg"
-              style="lg:aspect-video"
+              style="aspect-square lg:aspect-video"
             />
             <CategoryCard
               category="pants"
               title="Pants"
               image="/images/assets/pants_category.jpg"
-              style="lg:aspect-video"
+              style="aspect-square lg:aspect-video"
             />
           </main>
 
@@ -93,13 +93,13 @@ function HomePage() {
               category="jackets"
               title="Jackets"
               image="/images/assets/jacket_category.jpg"
-              style=""
+              style="aspect-square"
             />
             <CategoryCard
               category="hoodies"
               title="Hoodies"
               image="/images/assets/hoodie_category.jpg"
-              style=""
+              style="aspect-square"
             />
           </main>
         </article>
@@ -143,6 +143,7 @@ function HomePage() {
         <article className="mt-10 grid grid-cols-2 gap-3 gap-y-10 lg:grid-cols-4">
           {products.slice(products.length - 8).map((product) => (
             <ProductCard
+              id={product.id}
               key={product.id}
               image={product.image}
               name={product.name}
