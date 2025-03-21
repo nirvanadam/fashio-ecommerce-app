@@ -4,7 +4,6 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { GetServerSideProps } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import React, { useState } from "react";
 
 interface ProductPageProps {
@@ -14,9 +13,6 @@ interface ProductPageProps {
 function DetailProducts({ product }: ProductPageProps) {
   const [quantity, setQuantity] = useState(1);
   const [size, setSize] = useState("");
-
-  const router = useRouter();
-  console.log(product);
 
   if (!product) {
     return <p>Product not found</p>;
@@ -191,6 +187,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       props: { product },
     };
   } catch (error) {
+    console.log(error);
     return {
       props: { product: null },
     };
