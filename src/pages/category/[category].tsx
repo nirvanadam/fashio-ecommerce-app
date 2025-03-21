@@ -130,7 +130,7 @@ function AllProduct() {
 
           {/* Mobile Menu */}
           <nav
-            className={`${isCategoryMenuOpen ? "translate-x-0" : "translate-x-full"} fixed top-0 left-0 z-[100] flex h-screen w-full flex-col items-center justify-center gap-3 bg-white px-5 transition md:px-20`}
+            className={`${isCategoryMenuOpen ? "translate-x-0" : "translate-x-full"} fixed top-0 left-0 z-[100] flex h-full w-full flex-col items-center justify-center gap-3 bg-white px-5 transition md:px-20 lg:hidden`}
           >
             <div className="absolute top-0 right-0 flex w-full items-center justify-between px-5 py-5">
               <Link href="/" className="text-2xl font-medium tracking-widest">
@@ -141,18 +141,18 @@ function AllProduct() {
               </button>
             </div>
 
-            <div className="mt-10 flex w-full flex-col gap-3">
+            <div className="grid w-full grid-cols-2 gap-3">
               <CategoryCard
                 title="All"
                 image="/images/assets/hero.jpg"
                 category="all"
-                style="aspect-auto h-[120px] bg-center"
+                style="aspect-auto h-[120px] bg-center col-span-2"
               />
               <CategoryCard
                 title="Tops"
                 image="/images/assets/tshirt_category.jpg"
                 category="tops"
-                style="aspect-auto h-[120px]"
+                style="aspect-auto h-[120px] "
               />
               <CategoryCard
                 title="Pants"
@@ -164,19 +164,19 @@ function AllProduct() {
                 title="Shoes"
                 image="/images/assets/shoes_category.jpg"
                 category="shoes"
-                style="aspect-auto h-[120px] bg-center"
+                style="aspect-auto h-[120px] bg-center col-span-2"
               />
               <CategoryCard
                 title="Jackets"
                 image="/images/assets/jacket_category.jpg"
                 category="jackets"
-                style="aspect-auto h-[120px] bg-center"
+                style="aspect-auto h-[120px] bg-center "
               />
               <CategoryCard
                 title="Hoodie"
                 image="/images/assets/hoodie_category.jpg"
                 category="hoodies"
-                style="aspect-auto bg-center h-[120px]"
+                style="aspect-auto bg-center h-[120px] "
               />
             </div>
           </nav>

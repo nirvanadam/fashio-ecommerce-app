@@ -37,7 +37,7 @@ function DetailProducts({ product }: ProductPageProps) {
         </h1>
       </header>
 
-      <main className="grid-cols-[2fr_1fr] gap-16 lg:grid">
+      <main className="grid-cols-[2fr_1fr] items-center gap-16 lg:grid">
         <figure className="mx-auto w-full gap-3 sm:grid sm:grid-cols-4">
           <Image
             src={product?.image || ""}
