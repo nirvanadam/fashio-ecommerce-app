@@ -19,7 +19,7 @@ function HomePage() {
   return (
     <main>
       {/* Hero Section */}
-      <section className="before relative -mx-5 flex h-[600px] items-center bg-[url(/images/assets/hero.jpg)] bg-cover bg-[center] text-white lg:-mx-16 lg:h-[85vh] xl:-mx-24 2xl:-mx-64">
+      <section className="before relative -mx-5 flex h-[600px] items-center bg-[url(/images/assets/hero.webp)] bg-cover bg-[center] text-white lg:-mx-16 lg:h-[85vh] xl:-mx-24 2xl:-mx-64">
         <span className="absolute h-full w-full bg-black opacity-70" />
 
         <div className="absolute w-full px-5 lg:w-[60%] lg:px-10 xl:w-[65%] xl:px-20 2xl:px-60">
@@ -71,13 +71,13 @@ function HomePage() {
             <CategoryCard
               category="tops"
               title="Tops"
-              image="/images/assets/tshirt_category.jpg"
+              image="/images/assets/tshirt_category.webp"
               style="aspect-square lg:aspect-video"
             />
             <CategoryCard
               category="pants"
               title="Pants"
-              image="/images/assets/pants_category.jpg"
+              image="/images/assets/pants_category.webp"
               style="aspect-square lg:aspect-video"
             />
           </main>
@@ -86,19 +86,19 @@ function HomePage() {
             <CategoryCard
               category="shoes"
               title="Shoes"
-              image="/images/assets/shoes_category.jpg"
+              image="/images/assets/shoes_category.webp"
               style="col-span-2 aspect-video lg:col-span-1 lg:aspect-square lg:bg-[-50px]"
             />
             <CategoryCard
               category="jackets"
               title="Jackets"
-              image="/images/assets/jacket_category.jpg"
+              image="/images/assets/jacket_category.webp"
               style="aspect-square"
             />
             <CategoryCard
               category="hoodies"
               title="Hoodies"
-              image="/images/assets/hoodie_category.jpg"
+              image="/images/assets/hoodie_category.webp"
               style="aspect-square"
             />
           </main>
@@ -121,7 +121,7 @@ function HomePage() {
           </Link>
         </div>
 
-        <div className="h-[450px] w-full bg-[url(/images/assets/hero2.jpg)] bg-cover xl:h-full xl:bg-[center_-100px]" />
+        <div className="h-[450px] w-full bg-[url(/images/assets/hero2.webp)] bg-cover xl:h-full xl:bg-[center_-100px]" />
       </section>
 
       {/* Latest Products Section */}
