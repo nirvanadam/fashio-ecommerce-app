@@ -9,6 +9,13 @@ import axios from "axios";
 import Image from "next/image";
 
 function HomePage() {
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      window.location.href = "/auth/login";
+    }
+  }, []);
+
   const [products, setProducts] = useState<Product[]>([]);
   useEffect(() => {
     axios

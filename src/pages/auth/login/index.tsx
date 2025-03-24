@@ -1,9 +1,29 @@
-import { ChevronLeft, Eye } from "lucide-react";
+import axios from "axios";
+import { ChevronLeft, Eye, EyeClosed } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 
 export default function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+  const handleLogin = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setError("");
+
+    try {
+      const res = await axios.post("/api/auth/login", { email, password });
+      localStorage.setItem("token", res.data.token);
+      window.location.href = "/";
+    } catch (error) {
+      console.log(error);
+      setError("Email atau Password salah");
+    }
+  };
+
   return (
     <div className="-mx-5 h-screen bg-white text-black lg:-mx-16 lg:grid lg:grid-cols-2 xl:-mx-24 2xl:-mx-64">
       <header className="px-7 py-10 pt-32 sm:px-16 md:px-28 lg:content-center lg:justify-items-center lg:bg-black lg:px-0 lg:py-0 lg:text-white">
@@ -13,16 +33,24 @@ export default function LoginPage() {
         >
           <ChevronLeft color="#fff" className="" size={32} />
         </Link>
-        <h1 className="text-4xl font-semibold lg:hidden">Login</h1>
-        <h1 className="hidden text-5xl font-medium tracking-widest lg:block">
-          FASHIO
+        <h1 className="w-full text-center text-4xl font-semibold uppercase lg:hidden">
+          Login
         </h1>
+        <Link
+          href="/"
+          className="hidden text-5xl font-medium tracking-widest lg:block"
+        >
+          FASHIO
+        </Link>
       </header>
 
-      <main className="px-7 sm:px-16 md:px-28 lg:content-center lg:px-16 xl:px-28 2xl:px-52">
-        <h1 className="hidden text-4xl font-semibold lg:block">Login</h1>
+      <main className="px-9 sm:px-16 md:px-28 lg:content-center lg:px-16 xl:px-28 2xl:px-52">
+        <h1 className="hidden text-4xl font-semibold uppercase lg:block">
+          Login
+        </h1>
 
-        <form action="" className="flex flex-col gap-5 lg:mt-10">
+        {error && <p className="mt-2 text-red-500">{error}</p>}
+        <form onSubmit={handleLogin} className="flex flex-col gap-5 lg:mt-10">
           <div className="flex flex-col gap-1">
             <label htmlFor="email" className="font-medium">
               Email
@@ -31,6 +59,9 @@ export default function LoginPage() {
               type="email"
               name="email"
               id="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              required
               placeholder="hello@mail.com"
               className="w-full border-2 border-neutral-600 px-4 py-3 font-medium placeholder:font-medium focus:outline-none"
             />
@@ -43,17 +74,20 @@ export default function LoginPage() {
 
             <div className="relative">
               <input
-                type="password"
+                type={isPasswordVisible ? "text" : "password"}
                 name="password"
                 id="password"
                 placeholder="Your password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
                 className="w-full border-2 border-neutral-600 px-4 py-3 font-medium placeholder:font-medium focus:outline-none"
               />
               <button
                 type="button"
-                className="absolute top-1/2 right-3 -translate-y-1/2"
+                onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer"
               >
-                <Eye />
+                {isPasswordVisible ? <EyeClosed /> : <Eye />}
               </button>
             </div>
           </div>
@@ -62,7 +96,10 @@ export default function LoginPage() {
             <h1 className="">Forgot Password?</h1>
           </Link>
 
-          <button className="w-full bg-black p-3 text-lg font-semibold text-white">
+          <button
+            type="submit"
+            className="w-full bg-black p-3 text-lg font-semibold text-white"
+          >
             Login
           </button>
         </form>
