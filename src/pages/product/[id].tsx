@@ -1,4 +1,5 @@
 import { Product } from "@/types/typeProducts";
+import withAuth from "@/utils/withAuth";
 import axios from "axios";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { GetServerSideProps } from "next";
@@ -9,7 +10,6 @@ import React, { useState } from "react";
 interface ProductPageProps {
   product: Product | null;
 }
-
 function DetailProducts({ product }: ProductPageProps) {
   const [quantity, setQuantity] = useState(1);
   const [size, setSize] = useState("");
@@ -85,7 +85,7 @@ function DetailProducts({ product }: ProductPageProps) {
               </h2>
               <p className="mt-5 font-medium">{product?.description}</p>
               <h1 className="mt-5 text-xl font-semibold md:mt-7">
-                Rp {product?.price}
+                Rp {product?.price.toLocaleString("id-ID")}
               </h1>
             </article>
 
@@ -172,7 +172,7 @@ function DetailProducts({ product }: ProductPageProps) {
   );
 }
 
-export default DetailProducts;
+export default withAuth(DetailProducts);
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.params as { id: string };

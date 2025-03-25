@@ -26,7 +26,9 @@ function ProductCard({ id, name, subname, price, image }: ProductCardProps) {
       <h1 className="mt-5 text-lg font-medium">{name}</h1>
       <p className="text-sm font-medium text-gray-400">{subname}</p>
 
-      <h1 className="mt-2 text-lg font-medium">Rp {price}</h1>
+      <h1 className="mt-2 text-lg font-medium">
+        Rp {price.toLocaleString("id-ID")}
+      </h1>
     </Link>
   );
 }
