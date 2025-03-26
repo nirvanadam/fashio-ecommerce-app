@@ -5,8 +5,16 @@ import {
   UserRound,
 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
+  const [token, setToken] = useState<string | null>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    setToken(localStorage.getItem("token"));
+  }, []);
   return (
     <div className="">
       <nav className="flex items-center justify-between py-5 lg:py-8">
@@ -23,9 +31,28 @@ export default function Navbar() {
             Cart
           </Link>
 
-          <Link href="/auth/login">
+          <div className="flex gap-2">
             <UserRound />
-          </Link>
+            {token ? (
+              <button
+                type="button"
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  router.replace("/auth/login");
+                }}
+                className="cursor-pointer text-sm font-medium uppercase"
+              >
+                Logout
+              </button>
+            ) : (
+              <Link
+                href="/auth/login"
+                className="text-sm font-medium uppercase"
+              >
+                Login
+              </Link>
+            )}
+          </div>
         </div>
       </nav>
 

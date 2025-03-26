@@ -1,5 +1,5 @@
 import { Product } from "@/types/typeProducts";
-import withAuth from "@/utils/withAuth";
+import withAuth from "@/hoc/withAuth";
 import axios from "axios";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { GetServerSideProps } from "next";

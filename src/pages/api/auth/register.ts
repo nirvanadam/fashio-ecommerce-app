@@ -1,8 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import jwt from "jsonwebtoken";
-
-const users: { email: string; password: string }[] = [];
-const SECRET_KEY = "my_secret_key";
+import { registerUser } from "../../../../lib/auth";
 
 export default async function handler(
   req: NextApiRequest,
@@ -12,25 +9,14 @@ export default async function handler(
     return res.status(405).json({ message: "Method Not Allowed" });
   }
 
-  const { email, password, confirmPassword } = req.body;
+  const { email, password } = req.body;
 
-  //   Cek apakah email sudah terdaftar
-  const existingUser = users.find((user) => user.email === email);
-  if (existingUser) {
-    return res.status(400).json({ message: "Email sudah terdaftar!" });
+  try {
+    const user = await registerUser(email, password);
+    res.status(200).json({ message: "User registered successfully", user });
+  } catch (error: unknown) {
+    const errMsg =
+      error instanceof Error ? error.message : "Something went wrong";
+    res.status(400).json({ message: errMsg });
   }
-
-  //   Cek apakah password dan confirmPassword sama
-  if (password !== confirmPassword) {
-    return res
-      .status(400)
-      .json({ message: "Password dan Confirm Password tidak sama!" });
-  }
-
-  //   Simpan user
-  users.push({ email, password });
-
-  const token = jwt.sign({ email }, SECRET_KEY, { expiresIn: "1h" });
-
-  return res.status(200).json({ token });
 }

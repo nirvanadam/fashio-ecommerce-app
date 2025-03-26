@@ -2,27 +2,29 @@ import axios from "axios";
 import { ChevronLeft, Eye, EyeClosed } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import React, { useState } from "react";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
+    useState(false);
 
-  const router = useRouter();
-
-  const handleLogin = async (event: React.FormEvent) => {
+  const handleRegister = async (event: React.FormEvent) => {
     event.preventDefault();
     setMessage("");
 
-    try {
-      const res = await axios.post("/api/auth/login", { email, password });
+    if (password !== confirmPassword) {
+      setMessage("Password and confirm password must be the same");
+      return;
+    }
 
-      localStorage.setItem("token", res.data.token);
-      setMessage("Login success");
-      setTimeout(() => router.push("/"), 1500);
+    try {
+      const res = await axios.post("/api/auth/register", { email, password });
+      setMessage(res.data.message);
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         setMessage(
@@ -46,7 +48,7 @@ export default function LoginPage() {
           <ChevronLeft color="#fff" className="" size={32} />
         </Link>
         <h1 className="w-full text-center text-4xl font-semibold uppercase lg:hidden">
-          Login
+          Register
         </h1>
         <Link
           href="/"
@@ -58,11 +60,14 @@ export default function LoginPage() {
 
       <main className="px-9 sm:px-16 md:px-28 lg:content-center lg:px-16 xl:px-28 2xl:px-52">
         <h1 className="hidden text-4xl font-semibold uppercase lg:block">
-          Login
+          Register
         </h1>
 
-        <form onSubmit={handleLogin} className="flex flex-col gap-5 lg:mt-10">
-          {message && <p className="text-red-500">{message}</p>}
+        <form
+          onSubmit={handleRegister}
+          className="flex flex-col gap-5 lg:mt-10"
+        >
+          {message && <p className="text-sm text-red-500">*{message}</p>}
 
           <div className="flex flex-col gap-1">
             <label htmlFor="email" className="font-medium">
@@ -105,15 +110,38 @@ export default function LoginPage() {
             </div>
           </div>
 
-          <Link href="/auth/register" className="my-1 font-medium">
-            <h1 className="">Forgot Password?</h1>
-          </Link>
+          <div className="flex flex-col gap-1">
+            <label htmlFor="password" className="font-medium">
+              Confirm Password
+            </label>
+
+            <div className="relative">
+              <input
+                type={isConfirmPasswordVisible ? "text" : "password"}
+                name="confirmPassword"
+                id="confirmPassword"
+                placeholder="Confirm password"
+                value={confirmPassword}
+                onChange={(event) => setConfirmPassword(event.target.value)}
+                className="w-full border-2 border-neutral-600 px-4 py-3 font-medium placeholder:font-medium focus:outline-none"
+              />
+              <button
+                type="button"
+                onClick={() =>
+                  setIsConfirmPasswordVisible(!isConfirmPasswordVisible)
+                }
+                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer"
+              >
+                {isConfirmPasswordVisible ? <EyeClosed /> : <Eye />}
+              </button>
+            </div>
+          </div>
 
           <button
             type="submit"
             className="w-full cursor-pointer bg-black p-3 text-lg font-semibold text-white"
           >
-            Login
+            Register
           </button>
         </form>
 
