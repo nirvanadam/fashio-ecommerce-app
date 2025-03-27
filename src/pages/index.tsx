@@ -5,16 +5,26 @@ import React, { useEffect, useState } from "react";
 
 // Types
 import { Product } from "@/types/typeProducts";
-import axios from "axios";
+// import axios from "axios";
 import Image from "next/image";
+import { fetchProducts } from "../../lib/product";
 
 function HomePage() {
   const [products, setProducts] = useState<Product[]>([]);
+  // useEffect(() => {
+  //   axios
+  //     .get("/api/products")
+  //     .then((res) => setProducts(res.data))
+  //     .catch((err) => console.log(err));
+  // }, []);
+
   useEffect(() => {
-    axios
-      .get("/api/products")
-      .then((res) => setProducts(res.data))
-      .catch((err) => console.log(err));
+    const getProducts = async () => {
+      const data = await fetchProducts();
+      setProducts(data);
+    };
+
+    getProducts();
   }, []);
 
   return (

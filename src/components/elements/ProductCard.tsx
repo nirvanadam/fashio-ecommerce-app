@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 
 type ProductCardProps = {
-  id: number;
+  id: string;
   name: string;
   subname: string;
   price: number;

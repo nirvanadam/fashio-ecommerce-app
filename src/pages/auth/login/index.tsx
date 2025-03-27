@@ -105,10 +105,6 @@ export default function LoginPage() {
             </div>
           </div>
 
-          <Link href="/auth/register" className="my-1 font-medium">
-            <h1 className="">Forgot Password?</h1>
-          </Link>
-
           <button
             type="submit"
             className="w-full cursor-pointer bg-black p-3 text-lg font-semibold text-white"
@@ -135,6 +131,13 @@ export default function LoginPage() {
             <h1 className="font-semibold">Continue with Google</h1>
           </button>
         </div>
+
+        <h1 className="mt-5 text-center text-sm font-medium">
+          Don&apos;t have an account?{" "}
+          <Link href="/auth/register" className="font-bold underline">
+            Sign Up
+          </Link>
+        </h1>
       </main>
     </div>
   );

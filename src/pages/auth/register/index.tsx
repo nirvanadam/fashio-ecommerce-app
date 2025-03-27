@@ -163,6 +163,13 @@ export default function LoginPage() {
             <h1 className="font-semibold">Continue with Google</h1>
           </button>
         </div>
+
+        <h1 className="mt-5 text-center text-sm font-medium">
+          Already have an account?{" "}
+          <Link href="/auth/login" className="font-bold underline">
+            Login
+          </Link>
+        </h1>
       </main>
     </div>
   );
