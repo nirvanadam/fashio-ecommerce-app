@@ -1,11 +1,11 @@
 import CategoryCard from "@/components/elements/CategoryCard";
 import ProductCard from "@/components/elements/ProductCard";
 import { Product } from "@/types/typeProducts";
-import axios from "axios";
 import { SlidersHorizontal, StepBack, StepForward, X } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { fetchProducts } from "../../../lib/product";
 
 function AllProduct() {
   const router = useRouter();
@@ -14,10 +14,12 @@ function AllProduct() {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    axios
-      .get("/api/products")
-      .then((res) => setProducts(res.data))
-      .catch((err) => console.log(err));
+    const getProducts = async () => {
+      const data = await fetchProducts();
+      setProducts(data);
+    };
+
+    getProducts();
   }, []);
 
   const filteredProducts =

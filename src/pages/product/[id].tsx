@@ -1,11 +1,12 @@
 import { Product } from "@/types/typeProducts";
 import withAuth from "@/hoc/withAuth";
-import axios from "axios";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { GetServerSideProps } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../../lib/firebaseConfig";
 
 interface ProductPageProps {
   product: Product | null;
@@ -178,16 +179,19 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.params as { id: string };
 
   try {
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/products/${id}`,
-    );
-    const product = res.data;
+    // Ambil data produk dari Firestore
+    const productRef = doc(db, "products", id);
+    const productSnap = await getDoc(productRef);
+
+    if (!productSnap.exists()) {
+      return { notFound: true };
+    }
 
     return {
-      props: { product },
+      props: { product: { id: productSnap.id, ...productSnap.data() } },
     };
   } catch (error) {
-    console.log(error);
+    console.error("Error fetching product:", error);
     return {
       props: { product: null },
     };
