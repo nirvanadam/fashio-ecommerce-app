@@ -7,13 +7,35 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../lib/firebaseConfig";
+import { addToCart } from "../../../lib/addToCart";
+import { jwtDecode } from "jwt-decode";
 
-interface ProductPageProps {
-  product: Product | null;
+interface DecodedToken {
+  user_id: string;
 }
-function DetailProducts({ product }: ProductPageProps) {
+
+function DetailProducts({ product }: { product: Product }) {
   const [quantity, setQuantity] = useState(1);
   const [size, setSize] = useState("");
+
+  const handleAddToCart = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("Silakan login terlebih dahulu.");
+        return;
+      }
+
+      const decoded = jwtDecode<DecodedToken>(token);
+      const userId = decoded.user_id;
+
+      await addToCart(userId, product, quantity, size);
+      alert("Produk berhasil ditambahkan ke keranjang!");
+    } catch (error) {
+      console.error(error);
+      alert("Gagal menambahkan ke keranjang");
+    }
+  };
 
   if (!product) {
     return <p>Product not found</p>;
@@ -162,7 +184,10 @@ function DetailProducts({ product }: ProductPageProps) {
                 </div>
               </div>
 
-              <button className="mt-7 bg-black py-5 text-lg font-medium text-white uppercase">
+              <button
+                onClick={handleAddToCart}
+                className="mt-7 bg-black py-5 text-lg font-medium text-white uppercase"
+              >
                 Add To Cart
               </button>
             </form>
