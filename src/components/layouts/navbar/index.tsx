@@ -27,7 +27,7 @@ export default function Navbar() {
             Products
           </Link>
 
-          <Link href="/category/all" className="text-sm font-medium uppercase">
+          <Link href="/cart" className="text-sm font-medium uppercase">
             Cart
           </Link>
 
@@ -73,10 +73,13 @@ export default function Navbar() {
           <h1 className="text-xs font-medium">Products</h1>
         </Link>
 
-        <button className="flex flex-col items-center justify-center gap-2">
+        <Link
+          href="/cart"
+          className="flex flex-col items-center justify-center gap-2"
+        >
           <ShoppingCartIcon size={20} color="#000000" />
           <h1 className="text-xs font-medium">Cart</h1>
-        </button>
+        </Link>
 
         <button className="flex flex-col items-center justify-center gap-2">
           <UserRound size={20} color="#000000" />

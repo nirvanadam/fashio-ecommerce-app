@@ -186,7 +186,7 @@ function DetailProducts({ product }: { product: Product }) {
 
               <button
                 onClick={handleAddToCart}
-                className="mt-7 bg-black py-5 text-lg font-medium text-white uppercase"
+                className="mt-7 cursor-pointer bg-black py-5 text-lg font-medium text-white uppercase"
               >
                 Add To Cart
               </button>
