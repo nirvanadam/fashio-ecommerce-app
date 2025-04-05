@@ -4,6 +4,8 @@ import { db } from "./firebaseConfig";
 interface Product {
   id: string;
   name: string;
+  subname: string;
+  image: string;
   price: number;
 }
 
@@ -37,6 +39,8 @@ export const addToCart = async (
       const cartItem = {
         productId: product.id,
         name: product.name,
+        subname: product.subname,
+        image: product.image,
         price: product.price,
         quantity,
         size,
