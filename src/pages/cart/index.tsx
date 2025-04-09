@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import { removeFromCart } from "../../../lib/removeCartItem";
+import { updateCartItem } from "../../../lib/updateCartItem";
 
 interface CartItem {
   productId: string;
@@ -45,6 +46,30 @@ export default function CartPage() {
     fetchCart();
   }, []);
 
+  const handleUpdateQuantity = async (item: CartItem, newQuantity: number) => {
+    if (newQuantity < 1 || newQuantity > 10) return;
+
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      const decoded = jwtDecode<DecodedToken>(token);
+      const userId = decoded.user_id;
+
+      await updateCartItem(userId, item.productId, item.size, newQuantity);
+
+      setCartItems((prev) =>
+        prev.map((i) =>
+          i.productId === item.productId && i.size === item.size
+            ? { ...i, quantity: newQuantity }
+            : i,
+        ),
+      );
+    } catch (error) {
+      console.error("Gagal update quantity", error);
+    }
+  };
+
   const handleRemove = async (productId: string, size: string) => {
     try {
       const token = localStorage.getItem("token");
@@ -79,7 +104,6 @@ export default function CartPage() {
     return <div className="p-4">Loading keranjang...</div>;
   }
 
-  console.log(cartItems);
   return (
     <div className="pt-16 pb-32">
       <header className="fixed top-0 left-0 mb-5 flex w-full items-center gap-5 bg-black px-3 py-3 text-white">
@@ -107,15 +131,31 @@ export default function CartPage() {
                 <h1 className="text-sm font-medium sm:text-base">
                   Size: {item.size}
                 </h1>
-                <h1 className="text-sm font-medium sm:text-base">
-                  Qty: {item.quantity}
-                </h1>
+                <div className="flex w-fit items-center justify-center gap-2 border font-medium">
+                  <button
+                    onClick={() =>
+                      handleUpdateQuantity(item, item.quantity - 1)
+                    }
+                    className="border-r p-1"
+                  >
+                    -
+                  </button>
+                  <span>{item.quantity}</span>
+                  <button
+                    onClick={() =>
+                      handleUpdateQuantity(item, item.quantity + 1)
+                    }
+                    className="border-l p-1"
+                  >
+                    +
+                  </button>
+                </div>
                 <p className="mt-5 font-semibold text-red-500 sm:text-lg">
                   Rp {(item.price * item.quantity).toLocaleString()}
                 </p>
                 <button
                   onClick={() => handleRemove(item.productId, item.size)}
-                  className="text-sm text-red-600 hover:underline"
+                  className="cursor-pointer text-sm text-red-600"
                 >
                   Hapus
                 </button>
