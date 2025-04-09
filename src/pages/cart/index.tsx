@@ -4,6 +4,7 @@ import { getCartItems } from "../../../lib/getCartItems";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
+import { removeFromCart } from "../../../lib/removeCartItem";
 
 interface CartItem {
   productId: string;
@@ -43,6 +44,31 @@ export default function CartPage() {
 
     fetchCart();
   }, []);
+
+  const handleRemove = async (productId: string, size: string) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("Silakan login terlebih dahulu.");
+        return;
+      }
+
+      const decoded = jwtDecode<DecodedToken>(token);
+      const userId = decoded.user_id;
+
+      await removeFromCart(userId, productId, size);
+
+      // Refresh list keranjang setelah hapus
+      setCartItems((prev) =>
+        prev.filter(
+          (item) => !(item.productId === productId && item.size === size),
+        ),
+      );
+    } catch (error) {
+      console.error("Gagal menghapus item:", error);
+      alert("Gagal menghapus item dari keranjang");
+    }
+  };
 
   // Total harga semua item
   const totalPrice = cartItems.reduce((total, item) => {
@@ -87,6 +113,12 @@ export default function CartPage() {
                 <p className="mt-5 font-semibold text-red-500 sm:text-lg">
                   Rp {(item.price * item.quantity).toLocaleString()}
                 </p>
+                <button
+                  onClick={() => handleRemove(item.productId, item.size)}
+                  className="text-sm text-red-600 hover:underline"
+                >
+                  Hapus
+                </button>
               </div>
             </article>
           ))}
