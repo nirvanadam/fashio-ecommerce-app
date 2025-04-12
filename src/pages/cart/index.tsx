@@ -2,7 +2,7 @@ import { jwtDecode } from "jwt-decode";
 import React, { useEffect, useState } from "react";
 import { getCartItems } from "../../../lib/getCartItems";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Minus, Plus, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { removeFromCart } from "../../../lib/removeCartItem";
 import { updateCartItem } from "../../../lib/updateCartItem";
@@ -105,8 +105,8 @@ export default function CartPage() {
   }
 
   return (
-    <div className="pt-16 pb-32">
-      <header className="fixed top-0 left-0 mb-5 flex w-full items-center gap-5 bg-black px-3 py-3 text-white">
+    <div className="-mx-5 bg-gray-200 lg:-mx-16 xl:-mx-24 2xl:-mx-64">
+      <header className="flex h-[6vh] w-full items-center gap-5 bg-black px-3 py-3 text-white">
         <Link href="/">
           <ArrowLeft />
         </Link>
@@ -116,56 +116,68 @@ export default function CartPage() {
       {cartItems.length === 0 ? (
         <p>Keranjang masih kosong.</p>
       ) : (
-        <main className="flex flex-col gap-5">
+        <main className="flex h-[84vh] flex-col gap-3 overflow-y-scroll md:gap-5 lg:mx-40 xl:mx-52 2xl:mx-80">
           {cartItems.map((item) => (
             <article
               key={`${item.productId}-${item.size}`}
-              className="grid grid-cols-[1fr_2fr] gap-3 rounded bg-gray-50 p-3 shadow"
+              className="grid grid-cols-[1fr_2fr_0.1fr] gap-3 bg-white p-3 lg:p-7 xl:p-10"
             >
-              <Image src={item.image} alt="" width={500} height={500} />
+              <Image
+                src={item.image}
+                alt=""
+                width={500}
+                height={500}
+                className="rounded-md]"
+              />
               <div className="">
                 <h1 className="font-semibold sm:text-lg">{item.name}</h1>
                 <h1 className="mb-2 text-sm font-medium text-gray-400 sm:text-base">
                   {item.subname}
                 </h1>
-                <h1 className="text-sm font-medium sm:text-base">
+
+                <h1 className="w-fit bg-gray-200 p-1 text-sm font-medium sm:text-base">
                   Size: {item.size}
                 </h1>
-                <div className="flex w-fit items-center justify-center gap-2 border font-medium">
+
+                <div className="mt-3 flex w-fit items-center justify-center gap-2 border border-gray-300 font-medium">
                   <button
                     onClick={() =>
                       handleUpdateQuantity(item, item.quantity - 1)
                     }
-                    className="border-r p-1"
+                    className="cursor-pointer border-r border-gray-300 p-1"
                   >
-                    -
+                    <Minus size={18} />
                   </button>
-                  <span>{item.quantity}</span>
+
+                  <span className="px-2">{item.quantity}</span>
+
                   <button
                     onClick={() =>
                       handleUpdateQuantity(item, item.quantity + 1)
                     }
-                    className="border-l p-1"
+                    className="cursor-pointer border-l border-gray-300 p-1"
                   >
-                    +
+                    <Plus size={18} />
                   </button>
                 </div>
+
                 <p className="mt-5 font-semibold text-red-500 sm:text-lg">
                   Rp {(item.price * item.quantity).toLocaleString()}
                 </p>
-                <button
-                  onClick={() => handleRemove(item.productId, item.size)}
-                  className="cursor-pointer text-sm text-red-600"
-                >
-                  Hapus
-                </button>
               </div>
+
+              <button
+                onClick={() => handleRemove(item.productId, item.size)}
+                className="cursor-pointer self-center text-sm text-red-600"
+              >
+                <Trash2 size={20} />
+              </button>
             </article>
           ))}
         </main>
       )}
 
-      <div className="fixed bottom-0 left-0 mt-6 w-full border-t border-gray-300 bg-white p-4">
+      <div className="fixed bottom-0 left-0 h-[10vh] w-full border-t border-gray-300 bg-white p-3">
         <h2 className="text-lg font-semibold">Total:</h2>
         <p className="text-xl font-bold text-green-600">
           Rp {totalPrice.toLocaleString()}
