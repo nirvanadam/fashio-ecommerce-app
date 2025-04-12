@@ -24,6 +24,7 @@ interface DecodedToken {
 export default function CartPage() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -95,6 +96,23 @@ export default function CartPage() {
     }
   };
 
+  const handleSelectItem = (id: string) => {
+    setSelectedItems((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
+    );
+  };
+
+  console.log(selectedItems);
+
+  const handleCheckout = () => {
+    const itemsToCheckout = cartItems.filter((item) =>
+      selectedItems.includes(`${item.productId}_${item.size}`),
+    );
+
+    console.log("Items for checkout:", itemsToCheckout);
+    // Nanti bisa kirim data ini ke Firebase atau tampilkan halaman ringkasan
+  };
+
   // Total harga semua item
   const totalPrice = cartItems.reduce((total, item) => {
     return total + item.price * item.quantity;
@@ -119,16 +137,28 @@ export default function CartPage() {
         <main className="flex h-[84vh] flex-col gap-3 overflow-y-scroll md:gap-5 lg:mx-40 xl:mx-52 2xl:mx-80">
           {cartItems.map((item) => (
             <article
-              key={`${item.productId}-${item.size}`}
-              className="grid grid-cols-[1fr_2fr_0.1fr] gap-3 bg-white p-3 lg:p-7 xl:p-10"
+              key={`${item.productId}_${item.size}`}
+              className="grid grid-cols-[0.1fr_1fr_2fr_0.1fr] gap-5 bg-white p-3 lg:p-7 xl:p-10"
             >
+              <input
+                type="checkbox"
+                checked={selectedItems.includes(
+                  `${item.productId}_${item.size}`,
+                )}
+                onChange={() =>
+                  handleSelectItem(`${item.productId}_${item.size}`)
+                }
+                className="size-5 self-center"
+              />
+
               <Image
                 src={item.image}
                 alt=""
                 width={500}
                 height={500}
-                className="rounded-md]"
+                className="self-center rounded-md"
               />
+
               <div className="">
                 <h1 className="font-semibold sm:text-lg">{item.name}</h1>
                 <h1 className="mb-2 text-sm font-medium text-gray-400 sm:text-base">
@@ -177,11 +207,21 @@ export default function CartPage() {
         </main>
       )}
 
-      <div className="fixed bottom-0 left-0 h-[10vh] w-full border-t border-gray-300 bg-white p-3">
-        <h2 className="text-lg font-semibold">Total:</h2>
-        <p className="text-xl font-bold text-green-600">
-          Rp {totalPrice.toLocaleString()}
-        </p>
+      <div className="fixed bottom-0 left-0 flex h-[10vh] w-full items-center justify-between border-t border-gray-300 bg-white p-3">
+        <div className="flex">
+          <h2 className="text-lg font-semibold">Total:</h2>
+          <p className="text-xl font-bold text-green-600">
+            Rp {totalPrice.toLocaleString()}
+          </p>
+        </div>
+
+        <button
+          disabled={selectedItems.length === 0}
+          onClick={() => handleCheckout()}
+          className="bg-black px-5 py-3 font-medium text-white disabled:opacity-50"
+        >
+          Checkout
+        </button>
       </div>
     </div>
   );
